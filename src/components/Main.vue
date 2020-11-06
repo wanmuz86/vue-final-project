@@ -120,10 +120,10 @@
  
     methods: {
       searchClick: function(){
-        console.log('user select '+this.pickupdate+ ' ' + this.returndate+ ' '+this.citySelected )
-       //this.router.push({name:'Detail'})
+     
+       this.$router.push({name:'Detail',params:{sendDate:this.pickupdate,returnDate:this.returndate, city:this.citySelected}})
 
-       window.location.href = "/detail/"+this.pickupdate+"/"+this.returndate+"/"+this.citySelected
+       // window.location.href = "/detail/"+this.pickupdate+"/"+this.returndate+"/"+this.citySelected
       }
       // getImgUrl: function(url) {
       // var images = require.context('../assets/', false, /\.jpg$/)
