@@ -34,7 +34,7 @@
       <div class="container">
         <h3>Featured Bikes</h3>
         <div class="row">
-          <div class="col-4" v-for="motor in motorbikes" :key="motor.name">
+          <div class="col-4" v-for="motor in motorbikes" :key="motor.name" v-on:click="detailClick(motor.id)">
             <div class="card">
               <img v-bind:src="motor.img" class="card-img-top" alt="...">
               <div class="card-body">
@@ -75,23 +75,19 @@
      <script>
      export default {
       name: 'Main',
+      mounted(){
+        console.log('page loaded!')
+        let url = 'https://api.sheety.co/4db58997dd33ab7eaa3d621c48bdea06/motors/sheet1';
+        fetch(url)
+        .then((response) => response.json())
+        .then(json => {
+  // Do something with the data
+        this.motorbikes = json.sheet1
+      });
+      },
       data(){ 
         return {
-         motorbikes:[{
-          name:"Harley Davidson Fatboy",
-          location:"Seremban Bandar Sri Sendayan, Negeri Sembilan",
-          img:"../images/harley.jpg"
-        },
-        {
-          name:"Yamaha 135C",
-          location:"Putrajaya Central, Selangor",
-          img:"../images/yamaha2.jpg"
-        },
-        {
-          name:"KTM 250 TPI",
-          location:"Damansara Perdana Selangor",
-          img:"../images/ktm.jpg"
-        }],
+         motorbikes:[],
         cities : [
         {
           id:1,
@@ -110,62 +106,66 @@
           name:"Perak"
         }
         ],
-     
-      pickupdate:'',
-      returndate:'',
-      citySelected:'Seremban'
-       }
-     },
-  
- 
+
+        pickupdate:'',
+        returndate:'',
+        citySelected:'Seremban'
+      }
+    },
+
+
     methods: {
+      detailClick: function(id){
+        console.log(id)
+         this.$router.push({name:'Car',params:{id:id}})
+      },
       searchClick: function(){
-     
+
        this.$router.push({name:'Detail',params:{sendDate:this.pickupdate,returnDate:this.returndate, city:this.citySelected}})
 
        // window.location.href = "/detail/"+this.pickupdate+"/"+this.returndate+"/"+this.citySelected
-      }
+     }
       // getImgUrl: function(url) {
       // var images = require.context('../assets/', false, /\.jpg$/)
       // return images( url )
     }
 
-  
-}
-</script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+  }
+  </script>
 
-#jumbotron {
-  background-image:url('../../public/images/jumbos.jpg');
-  background-size:cover;
-  height: 80%;
-  padding: 150px 0px;
-}
-.card-jumbo {
-  border-radius: 15px;
-  background-color: rgba(0,0,0,0.5);
-  width: 60%;
-  min-width:450px;
-  margin:0px auto;
-  padding: 30px;
-}
-.rental-icon {
-  font-size: 72px;
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+  <!-- Add "scoped" attribute to limit CSS to this component only -->
+  <style scoped>
+
+  #jumbotron {
+    background-image:url('../../public/images/jumbos.jpg');
+    background-size:cover;
+    height: 80%;
+    padding: 150px 0px;
+  }
+  .card-jumbo {
+    border-radius: 15px;
+    background-color: rgba(0,0,0,0.5);
+    width: 60%;
+    min-width:450px;
+    margin:0px auto;
+    padding: 30px;
+  }
+  .rental-icon {
+    font-size: 72px;
+  }
+  h3 {
+    margin: 40px 0 0;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  a {
+    color: #42b983;
+  }
+  </style>
